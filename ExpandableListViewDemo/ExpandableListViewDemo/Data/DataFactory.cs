@@ -47,7 +47,7 @@ namespace ExpandableListViewDemo.Data
                     ItemTitle = "Item 4",
                     Category = Category2
                 }
-            }
+            };
         }
     }
 }
