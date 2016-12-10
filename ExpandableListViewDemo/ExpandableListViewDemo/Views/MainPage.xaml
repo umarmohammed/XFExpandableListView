@@ -10,14 +10,12 @@
     <ListView.GroupHeaderTemplate>
       <DataTemplate>
         <ViewCell>
-        <ContentView Padding="10,0,0,0">
-          <Label Text="{Binding Key.Category.CategoryTitle}" VerticalOptions="Center"/>
-          <ContentView.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding Source={x:Reference TheMainPage}, Path=BindingContext.HeaderSelectedCommand}" CommandParameter="{Binding .}"/>
-          </ContentView.GestureRecognizers>
-        </ContentView>
-          
-
+          <ContentView Padding="10,0,0,0">
+            <Label Text="{Binding Key.Category.CategoryTitle}" VerticalOptions="Center"/>
+            <ContentView.GestureRecognizers>
+              <TapGestureRecognizer Command="{Binding Source={x:Reference TheMainPage}, Path=BindingContext.HeaderSelectedCommand}" CommandParameter="{Binding .}"/>
+            </ContentView.GestureRecognizers>
+          </ContentView>
         </ViewCell>
       </DataTemplate>
     </ListView.GroupHeaderTemplate>
