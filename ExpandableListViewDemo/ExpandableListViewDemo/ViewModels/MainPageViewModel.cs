@@ -3,33 +3,33 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using ExpandableListViewDemo.Infrastructure;
+using ExpandableListViewDemo.Models;
+using Microsoft.Practices.ObjectBuilder2;
 
 namespace ExpandableListViewDemo.ViewModels
 {
-    public class MainPageViewModel : BindableBase, INavigationAware
+    public class SelectCategory
     {
-        private string _title;
-        public string Title
-        {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
-        }
+        public Category Category { get; set; }
+        public bool Selected { get; set; }
+    }
+
+    public class MainPageViewModel : BindableBase
+    {
+        public ObservableCollection<Grouping<SelectCategory, Item>> Categories { get; set; } 
 
         public MainPageViewModel()
         {
-
-        }
-
-        public void OnNavigatedFrom(NavigationParameters parameters)
-        {
-
-        }
-
-        public void OnNavigatedTo(NavigationParameters parameters)
-        {
-            if (parameters.ContainsKey("title"))
-                Title = (string)parameters["title"] + " and Prism";
+            Categories = new ObservableCollection<Grouping<SelectCategory, Item>>();
+            var selectCategories =
+                Data.DataFactory.DataItems.Select(x => new SelectCategory {Category = x.Category, Selected = false})
+                    .GroupBy(sc => new {sc.Category.CategoryId})
+                    .Select(g => g.First())
+                    .ToList();
+            selectCategories.ForEach(sc => Categories.Add(new Grouping<SelectCategory, Item>(sc, new List<Item>())));
         }
     }
 }
