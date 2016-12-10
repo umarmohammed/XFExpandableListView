@@ -5,7 +5,11 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ExpandableListViewDemo.Views.MainPage"
              Title="MainPage">
-  <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-    <Label Text="{Binding Title}" />
-  </StackLayout>
+  <ListView IsGroupingEnabled="True" ItemsSource="{Binding Categories}">
+    <ListView.GroupHeaderTemplate>
+      <DataTemplate>
+        <TextCell Text="{Binding Key.Category.CategoryTitle}"></TextCell>
+      </DataTemplate>
+    </ListView.GroupHeaderTemplate>
+  </ListView>
 </ContentPage>
