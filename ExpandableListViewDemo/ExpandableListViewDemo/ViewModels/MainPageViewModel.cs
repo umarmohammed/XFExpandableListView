@@ -19,7 +19,28 @@ namespace ExpandableListViewDemo.ViewModels
 
     public class MainPageViewModel : BindableBase
     {
-        public ObservableCollection<Grouping<SelectCategory, Item>> Categories { get; set; } 
+        public ObservableCollection<Grouping<SelectCategory, Item>> Categories { get; set; }
+
+        public DelegateCommand<Grouping<SelectCategory, Item>> HeaderSelectedCommand
+        {
+            get
+            {
+                return new DelegateCommand<Grouping<SelectCategory, Item>>(g =>
+                {
+                    if (g == null) return;
+                    g.Key.Selected = !g.Key.Selected;
+                    if (g.Key.Selected)
+                    {
+                        Data.DataFactory.DataItems.Where(i => (i.Category.CategoryId == g.Key.Category.CategoryId))
+                            .ForEach(g.Add);
+                    }
+                    else
+                    {
+                        g.Clear();
+                    }
+                });
+            }
+        }
 
         public MainPageViewModel()
         {
