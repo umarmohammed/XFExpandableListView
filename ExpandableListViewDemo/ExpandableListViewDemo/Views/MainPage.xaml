@@ -4,12 +4,27 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ExpandableListViewDemo.Views.MainPage"
-             Title="MainPage">
+             Title="MainPage"
+             x:Name="TheMainPage">
   <ListView IsGroupingEnabled="True" ItemsSource="{Binding Categories}">
     <ListView.GroupHeaderTemplate>
       <DataTemplate>
-        <TextCell Text="{Binding Key.Category.CategoryTitle}"></TextCell>
+        <ViewCell>
+        <ContentView Padding="10,0,0,0">
+          <Label Text="{Binding Key.Category.CategoryTitle}" VerticalOptions="Center"/>
+          <ContentView.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding Source={x:Reference TheMainPage}, Path=BindingContext.HeaderSelectedCommand}" CommandParameter="{Binding .}"/>
+          </ContentView.GestureRecognizers>
+        </ContentView>
+          
+
+        </ViewCell>
       </DataTemplate>
     </ListView.GroupHeaderTemplate>
+    <ListView.ItemTemplate>
+      <DataTemplate>
+        <TextCell Text="{Binding ItemTitle}"/>
+      </DataTemplate>
+    </ListView.ItemTemplate>
   </ListView>
 </ContentPage>
